@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import * as os from 'os';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AppService {
+  constructor(private readonly jwtService: JwtService) {}
+
   getHello(): string {
     return 'Hello World!';
   }
@@ -29,5 +32,20 @@ export class AppService {
         cpus: os.cpus().length,
       },
     };
+  }
+
+  async login(userId: string) {
+    const payload = { sub: userId };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+
+  async validateToken(token: string) {
+    try {
+      return this.jwtService.verify(token);
+    } catch (e) {
+      return null;
+    }
   }
 }
