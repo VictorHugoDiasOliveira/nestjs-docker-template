@@ -25,8 +25,8 @@ export class AppController {
 
   @Get('protected')
   @UseGuards(JwtAuthGuard)
-  getProtectedData() {
-    return { message: 'Acesso autorizado!' };
+  localProtectedRoute() {
+    return { message: 'JWT Local válido!' };
   }
 
   @Get('google')
@@ -41,9 +41,4 @@ export class AppController {
     return { message: 'Microsoft JWT válido!' };
   }
 
-  @Get('protected')
-  @UseGuards(JwtAuthGuard)
-  localProtectedRoute() {
-    return { message: 'JWT Local válido!' };
-  }
 }
